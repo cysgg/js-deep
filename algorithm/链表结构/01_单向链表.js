@@ -71,6 +71,54 @@ LinkedList.prototype.get = function(position){
     return cur.data
 }
 
+LinkedList.prototype.indexOf = function(data){
+    
+    let i = 0
+    let cur = this.head
+    while(cur){
+        if(data == cur.data){
+            return i
+        }
+        i++
+        cur = cur.next
+    }
+    return -1
+}
+
+LinkedList.prototype.updata = function(position,data){
+    
+    if(position < 0 || position >= this.length){
+        return -1
+    }
+    let cur = this.head
+    let i = 0
+    while(i++ < position){
+        cur = cur.next
+    }
+    return cur.data = data
+}
+
+LinkedList.prototype.removeAt = function(position){
+    
+    if(position < 0 || position >= this.length){
+        return null
+    }
+    if(position == 0){
+        this.head = this.head.next
+    }else{
+        var cur = this.head
+        
+        let i = 0
+        while(++i < position){
+            cur = cur.next
+        }
+        var data = cur.next.data
+        cur.next = cur.next.next
+    }
+    this.length--
+    return data
+}
+
 var list = new LinkedList()
 list.append('a')
 list.append('b')
@@ -81,3 +129,9 @@ console.log(list.insert(0,'e'));
 
 console.log(list.toString());
 console.log(list.get(2));
+console.log(list.indexOf('e'));
+console.log(list.updata(5,'f'));
+console.log(list.removeAt(4));
+
+console.log(list.toString());
+
