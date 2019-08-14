@@ -119,6 +119,19 @@ LinkedList.prototype.removeAt = function(position){
     return data
 }
 
+LinkedList.prototype.remove = function(data){
+    
+    let position =this.indexOf(data)
+    return this.removeAt(position)
+}
+
+LinkedList.prototype.isEmpty = function(data){
+    return this.length == 0
+}
+LinkedList.prototype.size = function(data){
+    return this.length
+}
+
 var list = new LinkedList()
 list.append('a')
 list.append('b')
