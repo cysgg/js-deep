@@ -3,47 +3,55 @@
  * @return {number}
  */
 var minimumTotal = function (triangle) {
-    let len = triangle.length
-    let triangles = Array.from({
-        length: len
-    }, v => 0)
-    triangles[0] = triangle[0][0]
-    let min = Math.min(...triangle[1])
-    let minIndexs = getMinIndex(triangle[1],min)
-    triangles[1] = triangles[0] + min
-
-    for (let i = 2; i < len; i++) {
-        min = Math.min(...getValuesByIndex(triangle[i], minIndexs))
-        triangles[i] = triangles[i - 1] + min
-        minIndexs = getMinIndex(triangles[i],min)
+    if (triangle.length == 1) {
+        return triangle[0][0]
     }
-    return triangles[len - 1]
+    let len = triangle.length
+
+    for (let i = 1; i < len; i++) {
+        let ilen = triangle[i].length
+        for(let j = 0 ; j < ilen; j++){
+            triangle[i][j] = getMinValue(triangle,i,j,ilen)
+        }
+    }
+    return Math.min(...triangle[len - 1])
 };
 
-function getValuesByIndex(arr1, arr2) {
-    let arr3 = arr2.map(v => v + 1).concat(arr2).reduce((p, v) => {
-        !p.includes(v) && p.push(v)
-        return p
-    }, [])
-    let len = arr3.length
-    return Array.from(arr3, v => arr1[v])
-}
-
-function getMinIndex(arr,min) {
-    return arr.reduce((p, v, i) => {
-        v === min && p.push(i)
-        return p
-    }, [])
+function getMinValue(a1,i,j,ilen) {
+    if(j === 0){
+        return a1[i][j] + a1[i-1][j]
+    }else if(j === ilen-1){
+        return a1[i][j] + a1[i-1][j-1]
+    }else{
+        return a1[i][j] + Math.min(a1[i-1][j-1],a1[i-1][j])
+    }
 }
 
 
+// var minimumTotal = function (triangle) {
+//     if (triangle.length == 1) {
+//         return triangle[0][0]
+//     }
+//     let len = triangle.length
+//     let ts = Array.from({
+//         length: len
+//     }, v => [])
+//     ts[0].push(triangle[0][0])
 
+//     for (let i = 1; i < len; i++) {
+//         let ilen = triangle[i].length
+//         for(let j = 0 ; j < ilen; j++){
+//             ts[i].push(getMinValue(triangle,ts,i,j,ilen))
+//         }
+//     }
+//     return Math.min(...ts[len - 1])
+// };
 let s = [
     [-1],
     [2, 3],
     [1, -1, -3]
 ]
 let p = [1, 2, 3, 4, 1, 2, 3, 4, 2, 5, 6, 1]
-console.log(getMinIndex(p));
+// console.log(getMinIndex(p));
 
 console.log(minimumTotal(s));
