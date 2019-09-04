@@ -1,4 +1,5 @@
 /**
+ * leetcode 70
  * @param {number} n
  * @return {number}
  */
@@ -12,4 +13,4 @@ var climbStairs = function(n) {
     return stairs[n-1]
 };
 
-console.log(climbStairs(4));
+console.log(climbStairs(99));
