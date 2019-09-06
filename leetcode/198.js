@@ -10,15 +10,11 @@ var rob = function (nums) {
     let memo = Array.from({
         length: len
     }, v => -1)
-    memo.push(0, 0, 0)
-    memo[len - 1] = nums[len - 1]
-    for (let i = len - 2; i >= 0; i--) {
-        for (let j = i; j < len; j++) {
-            memo[i] = Math.max(memo[i], nums[j] + memo[j + 2])
-        }
-
+    memo[0] = nums[0]
+    for (let i = 1; i < len; i++) {
+        memo[i] = Math.max(memo[i], nums[i] + (i - 2 < 0 ? 0 : memo[i - 2]), (i - 1 < 0 ? 0 : memo[i - 1]))
     }
-    return memo[0]
+    return memo[len - 1]
 };
-let nums = [1, 2, 3, 1]
+let nums = [2, 1, 3, 4]
 console.log(rob(nums));
